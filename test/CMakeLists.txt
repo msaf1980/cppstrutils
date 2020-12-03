@@ -1,4 +1,4 @@
-set(TEST_LIBRARIES ${PROJECT}_static)
+set(TEST_LIBRARIES strutils_static)
 
 include_directories(${Catch2_SOURCE_DIR}/single_include)
 
@@ -21,8 +21,8 @@ if(BENCH)
     )
 
     if(SOURCES_TEST)
-        # add_library( test${PROJECT} STATIC ${SOURCES_TEST} )
-        list(APPEND BENCH_LIBRARIES test${PROJECT})
+        # add_library( teststrutils STATIC ${SOURCES_TEST} )
+        list(APPEND BENCH_LIBRARIES teststrutils)
     endif(SOURCES_TEST)
 
     file(GLOB testFiles *_bench.cpp)

@@ -19,32 +19,24 @@ set(BINDIR bin)
 # Override lib build dir with LIBDIR
 set(LIBDIR lib)
 
-set(DIR_DEP dep)
-set(DIR_SCRIPT cmake)
-set(DIR_PRESCRIPT cmake_pre)
-
-include(${CMAKE_SOURCE_DIR}/settings.cmake)
 include(${CMAKE_SOURCE_DIR}/options_init.cmake)
 
 # Include cmake prescript from cmake dir
-file(GLOB cmakeFiles ${DIR_PRESCRIPT}/*.cmake)
+file(GLOB cmakeFiles cmake_pre/*.cmake)
 foreach(cmakeFile ${cmakeFiles})
     message("INCLUDE ${cmakeFile}")
     include(${cmakeFile})
 endforeach(cmakeFile)
 
-project(${PROJECT})
+project(strutils)
 
-file(GLOB cmakeFiles ${DIR_SCRIPT}/*.cmake)
+file(GLOB cmakeFiles cmake/*.cmake)
 foreach(cmakeFile ${cmakeFiles})
     message("INCLUDE ${cmakeFile}")
     include(${cmakeFile})
 endforeach(cmakeFile)
 
-if(DEFINED DIR_INCLUDES)
-    # Includes in separate directory, also include dependecies headers
-    include_directories(${DIR_INCLUDES} ${DEP_INSTALL_DIR}/include)
-endif()
+include_directories(include)
 
 if(DEFINED ENV{DEVENV})
     set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -54,22 +46,10 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-foreach(dir IN LISTS SUB_DIRS)
-    message("ADD ${dir}")
-    add_subdirectory(${dir})
-endforeach()
+add_subdirectory(src)
 
-if(TEST)
-    # enable_testing()
-    include(CTest)
-    if(DEFINED DIR_TESTS)
-        # set enable testing
-        foreach(dir IN LISTS DIR_TESTS)
-            message("ADD TEST ${dir}")
-            add_subdirectory(${dir})
-        endforeach()
-    endif()
-
-endif() # END TEST
+# enable_testing()
+include(CTest)
+add_subdirectory(test)
 
 include(${CMAKE_SOURCE_DIR}/options_print.cmake)
