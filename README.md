@@ -14,8 +14,7 @@ Function `last_is` check string if ends with postfix char
 Function `split` split string with char delimiter
 
 ## Release Notes
-master
-      Add functions `first_is`, `ends_with`, `last_is` 
+0.1.1 Add functions `first_is`, `ends_with`, `last_is` 
 0.1.0 Initial release
 
 ## TODO
